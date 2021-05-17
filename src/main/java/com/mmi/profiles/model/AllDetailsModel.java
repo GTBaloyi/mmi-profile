@@ -1,7 +1,6 @@
 package com.mmi.profiles.model;
 
-import com.mmi.profiles.entity.Education;
-import com.mmi.profiles.entity.Work;
+import java.util.*;
 
 public class AllDetailsModel {
     private String name;
@@ -16,18 +15,15 @@ public class AllDetailsModel {
 
     private String username;
 
-    private WorkDetailsModel work;
+    private List<EducationDetailsModel> education;
 
-    private EducationDetailsModel education;
-
-    public AllDetailsModel(String name, String surname, String picturePath, String aboutMe, String interests, String username, WorkDetailsModel work, EducationDetailsModel education) {
+    public AllDetailsModel(String name, String surname, String picturePath, String aboutMe, String interests, String username, List<EducationDetailsModel> education) {
         this.name = name;
         this.surname = surname;
         this.picturePath = picturePath;
         this.aboutMe = aboutMe;
         this.interests = interests;
         this.username = username;
-        this.work = work;
         this.education = education;
     }
 
@@ -35,31 +31,55 @@ public class AllDetailsModel {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPicturePath() {
         return picturePath;
     }
 
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+
     public String getAboutMe() {
         return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
     public String getInterests() {
         return interests;
     }
 
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
     public String getUsername() {
         return username;
     }
 
-    public WorkDetailsModel getWork() {
-        return work;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public EducationDetailsModel getEducation() {
+    public List<EducationDetailsModel> getEducation() {
         return education;
+    }
+
+    public void setEducation(List<EducationDetailsModel> education) {
+        this.education = education;
     }
 }

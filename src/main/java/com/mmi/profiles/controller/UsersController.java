@@ -20,13 +20,15 @@ public class UsersController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ResponseEntity getUsers(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<HttpStatus> getUsers(@RequestParam String username, @RequestParam String password) {
         if( userService.login(username,password)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
+
+
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
@@ -47,20 +49,7 @@ public class UsersController {
         }
     }
 
-    @RequestMapping(value = "/all-info", method = RequestMethod.PUT)
-    public ResponseEntity<PersonalDetailsModel> updateProfilePicture(@RequestBody AllDetailsModel allDetailsModel) {
-        try{
-            /*if(personalDetailsService.updateProfilePicture(username, profilePicture)) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            }else {
-                return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }*/
-            return null;
-        }
-        catch (Exception e) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
 
 
 }

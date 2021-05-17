@@ -6,6 +6,7 @@ import com.mmi.profiles.model.RegisterUserModel;
 import com.mmi.profiles.repository.IPersonalDetailsRepository;
 import com.mmi.profiles.repository.IUserRepository;
 import com.mmi.profiles.service.IUserService;
+import com.mmi.profiles.util.Commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,8 +42,8 @@ public class UserService implements IUserService {
 
         User user = new User(data.getUsername(), data.getPassword());
         userRepository.save(user);
-
-        String profilePicturePath = savePicture(data.getProfilePicture(), data.getUsername());
+        Commons commonMethods = new Commons();
+        String profilePicturePath = commonMethods.savePicture(data.getProfilePicture(), data.getUsername());
         Personal personal = new Personal(data.getFirstName(),
                 data.getLastName(),profilePicturePath,"", "", user);
         personalDetailsRepository.save(personal);
@@ -50,21 +51,5 @@ public class UserService implements IUserService {
         return true;
     }
 
-    private String savePicture(MultipartFile profilePicture, String username) {
-        String fileExtension = profilePicture.getOriginalFilename().split("\\.")[1];
-        String pictureDir = "C:\\tmp\\"+username+"."+fileExtension;
-        File file = new File(pictureDir);
-        try(FileOutputStream outputStream = new FileOutputStream(file)){
-            outputStream.write(profilePicture.getBytes());
-            return pictureDir;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
 
-
-    }
 }

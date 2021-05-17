@@ -7,14 +7,16 @@ import java.sql.Date;
 
 public class EducationDetailsModel {
     private int id;
+    private String username;
     private String qualification;
-    private int institutionName;
+    private String institutionName;
     private Date startDate;
     private Date endDate;
     private boolean completed;
 
-    public EducationDetailsModel(int id, String qualification, int institutionName, Date startDate, Date endDate, boolean completed) {
+    public EducationDetailsModel(int id,String username, String qualification, String institutionName, Date startDate, Date endDate, boolean completed) {
         this.id = id;
+        this.username = username;
         this.qualification = qualification;
         this.institutionName = institutionName;
         this.startDate = startDate;
@@ -30,7 +32,7 @@ public class EducationDetailsModel {
         return qualification;
     }
 
-    public int getInstitutionName() {
+    public String getInstitutionName() {
         return institutionName;
     }
 
@@ -44,5 +46,9 @@ public class EducationDetailsModel {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

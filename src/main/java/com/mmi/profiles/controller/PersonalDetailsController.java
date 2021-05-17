@@ -1,6 +1,8 @@
 package com.mmi.profiles.controller;
 
+import com.mmi.profiles.model.AllDetailsModel;
 import com.mmi.profiles.model.PersonalDetailsModel;
+import com.mmi.profiles.service.IPersonalDetailsService;
 import com.mmi.profiles.service.impl.PersonalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PersonalDetailsController {
 
     @Autowired
-    private PersonalDetailsService personalDetailsService;
+    private IPersonalDetailsService personalDetailsService;
 
     @RequestMapping(value = "/person/{username}", method = RequestMethod.GET)
     public ResponseEntity<PersonalDetailsModel> getPersonDetails(@PathVariable String username) {
@@ -39,7 +41,7 @@ public class PersonalDetailsController {
         }
     }
 
-    @RequestMapping(value = "/person/{username}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/profile_picture/{username}", method = RequestMethod.PUT)
     public ResponseEntity<PersonalDetailsModel> updateProfilePicture(@PathVariable String username,@RequestParam MultipartFile profilePicture) {
         try{
             if(personalDetailsService.updateProfilePicture(username, profilePicture)) {
@@ -53,6 +55,32 @@ public class PersonalDetailsController {
         }
     }
 
+    @RequestMapping(value = "/all-info/{username}", method = RequestMethod.GET)
+    public ResponseEntity<HttpStatus> updateAllInfo(@PathVariable String username) {
+        try{
+            AllDetailsModel allDetailsModel = personalDetailsService.getAllInfo(username);
+            if(allDetailsModel != null) {
+                return new ResponseEntity(allDetailsModel,HttpStatus.OK);
+            }
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/all-info", method = RequestMethod.PUT)
+    public ResponseEntity updateAllInfo(@RequestBody AllDetailsModel allDetailsModel) {
+        try{
+            if(personalDetailsService.updateAllInfo(allDetailsModel)) {
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

@@ -1,7 +1,11 @@
 package com.mmi.profiles.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.zip.Deflater;
 
 public class Commons {
@@ -27,5 +31,32 @@ public class Commons {
 
         return  outputStream.toByteArray();
 
+    }
+
+    public String savePicture(MultipartFile profilePicture, String username) {
+        String fileExtension = profilePicture.getOriginalFilename().split("\\.")[1];
+        String pictureDir = "C:\\tmp\\"+username+"."+fileExtension;
+        File file = new File(pictureDir);
+        try(FileOutputStream outputStream = new FileOutputStream(file)){
+            outputStream.write(profilePicture.getBytes());
+            return pictureDir;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    public void deleteOldProfile(String oldPath) {
+        try{
+            Files.delete(Paths.get(oldPath));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
